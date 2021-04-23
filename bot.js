@@ -13,7 +13,7 @@ const opts = {
   ]
 };
 
-const isMod = ((context) => context['mod'] || context['subscriber'] || true)
+const isMod = ((context) => context['mod'] || context['subscriber'])
 
 // Create a client with our options
 const client = new tmi.client(opts);
@@ -37,12 +37,8 @@ function onMessageHandler (target, context, msg, self) {
   const commandName = msg.trim();
 
   // If the command is known, let's execute it
-  if (commandName === '!dice') {
-    const num = rollDice();
-    client.say(target, `You rolled a ${num}`);
-    console.log(`* Executed ${commandName} command`);
-  }
-  else if(commandName === '!blastCorn') {
+  
+  if(commandName === '!blastCorn') {
       client.say(target, 'cornblCorn3 cornblCorn3 cornblCorn3 cornblCorn3 cornblCorn3 cornblCorn3 cornblCorn3 cornblCorn3 cornblCorn3 cornblCorn3')
   }
 
@@ -53,11 +49,11 @@ function onMessageHandler (target, context, msg, self) {
     client.say(target, context['username'] + " farted.  LOLOLOL!")
   }
 
-  else if(commandName === '!fart' && !isMod(context)) {
+  else if(commandName.match(/fart/i) && !isMod(context)) {
     client.say(target, "only mods may fart.")
   }
 
-  else if(isMod(context) && isAudioCommand(commandName)) {
+  else if(isMod(context) || !isMod(context) && isAudioCommand(commandName)) {
       executeAudioCommand(commandName)
   }
 
