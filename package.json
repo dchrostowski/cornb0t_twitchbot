@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "tmi.js": "^1.8.3"
+  },
+  "scripts": {
+    "start": "export $(cat .env | xargs) && node bot.js"
+  }
+}
