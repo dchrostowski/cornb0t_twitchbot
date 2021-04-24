@@ -53,7 +53,8 @@ function onMessageHandler (target, context, msg, self) {
     client.say(target, "only mods may fart.")
   }
 
-  else if(isMod(context) || !isMod(context) && isAudioCommand(commandName)) {
+  else if((isMod(context) || !isMod(context)) && isAudioCommand(commandName)) {
+      console.log("executing " + commandName)
       executeAudioCommand(commandName)
   }
 
